@@ -1,10 +1,14 @@
-import express from "express";
+import express from 'express'
 
-const main = async () => {
-  const app = express();
+const main = async (): Promise<void> => {
+  const app = express()
   app.listen(3000, () => {
-    console.log("Listening...");
-  });
-};
+    console.log('Listening...')
+  })
+}
 
-main();
+main()
+  .catch(err => {
+    console.error(err)
+    throw err
+  })
