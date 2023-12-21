@@ -1,15 +1,15 @@
 import express, { type Request, type Response } from 'express'
 
 import { UserEntity } from '../entities/user.entity'
-import { type UserService } from '../service/user.service'
+import { type CreateUserInteractor } from '../interactor/create-user.interactor'
 
 export class UserController {
-  constructor (private readonly userService: UserService) {}
+  constructor (private readonly createUserInteractor: CreateUserInteractor) {}
 
   createUser = (req: Request, res: Response): void => {
     const user = new UserEntity(req.body.id as number, req.body.name as string)
-    this.userService
-      .createUser(user)
+    this.createUserInteractor
+      .handle(user)
       .then((user) => {
         res.json(user)
       })

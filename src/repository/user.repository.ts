@@ -1,6 +1,7 @@
 import { type UserEntity } from '../entities/user.entity'
+import { UserRepository } from '../interactor/create-user.interactor'
 
-export class UserRepository {
+export class UserRepositoryImpl extends UserRepository {
   private readonly users: UserEntity[] = []
 
   async createUser (user: UserEntity): Promise<UserEntity> {

@@ -1,15 +1,15 @@
 import express from 'express'
 
 import { UserController } from './controller/user.controller'
-import { UserRepository } from './repository/user.repository'
-import { UserService } from './service/user.service'
+import { CreateUserInteractor } from './interactor/create-user.interactor'
+import { UserRepositoryImpl } from './repository/user.repository'
 
 const main = async (): Promise<void> => {
   const app = express()
 
-  const userRepository = new UserRepository()
-  const userService = new UserService(userRepository)
-  const userController = new UserController(userService)
+  const userRepository = new UserRepositoryImpl()
+  const createUserInteractor = new CreateUserInteractor(userRepository)
+  const userController = new UserController(createUserInteractor)
   userController.register(app, '/users')
 
   app.listen(3000, () => {

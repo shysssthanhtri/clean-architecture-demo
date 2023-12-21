@@ -1,10 +1,15 @@
 import { type UserEntity } from '../entities/user.entity'
-import { type UserRepository } from '../repository/user.repository'
 
-export class UserService {
+export abstract class UserRepository {
+  abstract findUserById (id: UserEntity['id']): Promise<UserEntity | undefined>
+
+  abstract createUser (user: UserEntity): Promise<UserEntity>
+}
+
+export class CreateUserInteractor {
   constructor (private readonly userRepository: UserRepository) {}
 
-  async createUser (user: UserEntity): Promise<UserEntity> {
+  async handle (user: UserEntity): Promise<UserEntity> {
     //  Business logic for validation
     if (await this.userRepository.findUserById(user.id) !== undefined) {
       throw new Error('Duplicated')
